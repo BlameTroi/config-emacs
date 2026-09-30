@@ -1,4 +1,4 @@
-;;; init-lisps.el --- Lisp and Scheme -*- lexical-binding: t; -*-
+;;; init-lisps.el --- Lisps and Scheme -*- lexical-binding: t; -*-
 
 ;;; Commentary:
 

@@ -1,6 +1,9 @@
-;;; init-compile.el --- Configure various placeholders -*- lexical-binding: t; -*-
+;;; init-compile.el --- Compile command -*- lexical-binding: t; -*-
 
 ;;; Commentary:
+
+;; This will probably need a good bit of work to support Odin and some
+;; other languages.
 
 ;;; Code:
 

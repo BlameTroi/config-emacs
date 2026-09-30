@@ -10,7 +10,7 @@
 ;; With that out of the way, I consider this to be in the public domain.
 
 
-;; OVERVIEW:
+;;;; OVERVIEW:
 
 ;; I am running GUI Emacs 31 and its capabilities are assumed
 ;; throughout. I don't do release checks and fallbacks beyond issuing
@@ -50,7 +50,8 @@
 ;; Emacs itself is a "feature" as are `dired', `recentf',`eshell', and
 ;; etc.
 
-;; INSPIRATIONS:
+
+;;;; INSPIRATIONS:
 
 ;; There are several good starter/tutorial configurations on Reddit,
 ;; GitHub, and elsewhere. These are the main sources:
@@ -82,9 +83,9 @@
 ;; "code" (mainly functions) originated elsewhere.
 
 ;; Prefixing functions meant to be used globally with a tag is
-;; standard practice. I will change those I find to "my/".
-;; This is to identify them as non standard functions, not to
-;; lay claim to the code itself.
+;; standard practice. I will change those I find to "my/". This is to
+;; identify them as extensions and not to lay claim to the code
+;; itself.
 
 ;; I claim only the comments, code layout, and any errors I might
 ;; introduce.
@@ -96,7 +97,7 @@
 ;; completions and language support.
 
 
-;; BUGS AND TO DO:
+;;;; BUGS AND TO DO:
 
 ;; `no-littering' setup is not automatted. Once things are stable
 ;; switch to use it.
@@ -128,13 +129,18 @@
 ;; 2026/09/30 Recreated from old configurations and the
 ;;            latest from Purcell and Wiersdorf.
 
-
 ;;; Code:
 
+
 ;;;; Bootstrap and compatibility warnings.
+
+;;;;;; `use-package' is NOT available. ---------------------------------
 
 (setopt debug-on-error t)
 (require 'cl-lib)
+
+
+;;;;; Add subdirectory `lisp' to the load path.
 
 ;; Add `lisp' to `load-path' and define my non-standard macros and
 ;; functions.
@@ -142,7 +148,8 @@
 (add-to-list 'load-path (expand-file-name "lisp" user-emacs-directory))
 (require 'init-macros-and-functions)
 
-;; Compatibility and requirements:
+
+;;;;; Version compatibility checks.
 
 (when (< emacs-major-version 31)
   (error "Emacs version 31 or newer required!"))
@@ -155,32 +162,34 @@
   (message "MacOS is assumed. Some things likely will break.")
   (sleep-for 5))
 
-;; Add children of `lisp/' along with `site-lisp/' and its children
-;; to the load path.
+
+;;;;; Add `site-lisp', its subdirectories, and `lisp's subdirectories to load-path.
 
 (push (expand-file-name "lisp" user-emacs-directory) load-path)
 (troi/add-subdirs-to-load-path (expand-file-name "lisp/" user-emacs-directory))
 
 (push (expand-file-name "site-lisp" user-emacs-directory) load-path)
 (troi/add-subdirs-to-load-path (expand-file-name "site-lisp/" user-emacs-directory))
-
-;;;; Configure `load-path', `package' and `use-package':
+
+
+;;;;; Configure `package' and `use-package':
 
 ;; The `use-package' macro may not be used until this section is
 ;; finished.
 
 (require 'init-use-package)
 
-;; You may now use `use-package'.
-
-;;;; Fix up path and environment variables: (Mac only)
+;;;;;; `use-package' available. ----------------------------------------
+
+
+;;;;; Fix up path and environment variables: (Mac only)
 
 ;; I only use MacOS and other than a few warnings I don't have any
 ;; guard clauses or fallback behavior for non Mac use.
 
 (require 'init-macos-shell-environment)
 
-
+
 ;;;; Configure Emacs and its various built in features:
 
 ;;;;; The basics.
@@ -286,7 +295,8 @@ Use this if the `troi/enable-tabs' defaults are not sufficient."
 (require 'init-markdown)  ;; can't escape it
 (require 'init-mpages)    ;; a diary of sorts
 ;; deft? spreadsheet, etc.
-
+
+
 ;;;; Programming and version control:
 
 ;;;;; Version control, git, and project management.
@@ -315,7 +325,7 @@ Use this if the `troi/enable-tabs' defaults are not sufficient."
 (require 'init-odin)    ;;
 ;; pascal, python, ruby, assembly, etc.
 
-
+
 ;;;; Minibuffer and basic completion.
 
 (require 'init-vertico)     ;; vertical lists not horizontal
@@ -328,6 +338,7 @@ Use this if the `troi/enable-tabs' defaults are not sufficient."
 ;;;;; Item icons via `nerd' and `kind'.
 
 (require 'init-nerd)      ;; and kind icons
+
 
 ;;;;; Theme:
 
@@ -466,7 +477,8 @@ Use this if the `troi/enable-tabs' defaults are not sufficient."
 ;; (set-face-attribute 'default nil :family "CaskaydiaMono Nerd Font" :foundry "nil" :slant normal :weight regular :height 155 :width expanded)
 ;; (set-face-attribute 'default nil :font "FiraCode Nerd Font Mono" :height 190)
 ;; (set-face-attribute 'variable-pitch nil :font "Cantarell" :height 180 :weight 'medium)
-
+
+
 ;;;; Keybinding:
 
 ;; TODO: These are defined in `init-macros-and-functions'. Standardize
@@ -525,10 +537,11 @@ Use this if the `troi/enable-tabs' defaults are not sufficient."
 ;;:bind (:map eglot-mode-map
 ;;          ("C-c c a" . eglot-code-actions)
 ;;        ("C-c c r" . eglot-rename))
+
 
 ;;;; Things that must be done last.
 
-;; Dimmer and alias definitions should be the last things done.
+;; Items grouped here (currently dimmer and aliases) seem best done last.
 
 (require 'init-dimmer)
 (require 'init-aliases)  ;; do this last

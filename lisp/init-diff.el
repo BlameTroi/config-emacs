@@ -1,6 +1,8 @@
-;;; init-diff.el --- Display of diffs -*- lexical-binding: t; -*-
+;;; init-diff.el --- See diffs and possibly merge or create patches -*- lexical-binding: t; -*-
 
 ;;; Commentary:
+
+;; Ediff is a helpful UI over standard file diff and patch tools.
 
 ;;; Code:
 

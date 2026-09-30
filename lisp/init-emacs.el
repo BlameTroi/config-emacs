@@ -5,13 +5,8 @@
 ;; Many customizations and hooks here. I have tried to group these by
 ;; general area of responsibility.
 
-;; A possible confusion: My configuration for `mlscroll' depends upon
-;; `which-function-mode'. I tried hanging both on `emacs-startup-hook'
-;; but the ordering didn't work. I now enable both modes in the proper
-;; order in `init-mlscroll',
-
-;; Aliases are defined in `init-aliases' which should be one of the last
-;; things required from `init.el'.
+;; Most aliases are defined in `init-aliases' which should be one of
+;; the last things required from `init.el'.
 
 ;;; Code:
 
@@ -22,7 +17,8 @@
 
 (use-package emacs
 
-  :hook
+
+  :hook ; ---------------------------------------------------------------
 
   ;; Most hooks are linked here, even though it would be just as valid
   ;; to put some under their owning package. One example would be
@@ -39,24 +35,27 @@
 
   (prog-mode . display-line-numbers-mode)
 
-
   ;; Minibuffer display and behavior.
 
   (emacs-startup . minibuffer-depth-indicate-mode)
   (emacs-startup . minibuffer-electric-default-mode)
 
-  :config
+
+  :config ; -------------------------------------------------------------
 
   (global-prettify-symbols-mode +1)
 
-  :custom
 
-  ;; Use this rather than the Easy Customization UI or the `setopt'
+  :custom ; -------------------------------------------------------------
+
+  ;; Use this block rather than the Easy Customization UI or the `setopt'
   ;; form.
 
-  ;; Ignore the customization file itself.
+  ;; Ignore the customization file itself. NOTE: It should also be
+  ;; excluded from VC via the appropriate `.ignore' file.
 
   (custom-file (locate-user-emacs-file "ignored-custom.el"))
+
 
   ;; Some personalization.
 
@@ -84,6 +83,7 @@
   (imenu-auto-rescan t)
   (view-read-only t)
   (column-number-mode t)
+
 
   ;; Text.
 
@@ -115,10 +115,12 @@
   (sentence-end-without-period nil)
   (adaptive-fill-mode t)
 
+
   ;; Line numbering in programming modes is the way. I prefer a fixed
   ;; minimum width.
 
   (disply-line-numbers-width 3)
+
 
   ;; Mode line and related settings.
 
@@ -133,6 +135,7 @@
 
   (mode-line-compact 'long)
 
+
   ;; Built-in completion dials and switches. Also see
   ;; `completion-category-overrides'. Packages `vertico', `corfu',
   ;; `cape', and others are configured later in this init.
@@ -146,16 +149,18 @@
   (completion-cycle-threshold 1)
   (completions-detailed t)
   (completion-auto-help 'always)
-  (completions-max-height 7) ; SWAG
+  (completions-max-height 7)
   (completions-format 'one-column)
   (completions-group t)
   (completion-auto-select 'second-tab)
   (apropos-sort-by-scores t)
 
+
   ;; Minibuffers.
 
   (enable-recursive-minibuffers t)
   (minibuffer-default-prompt-format " [%s]")
+
 
   ;; Make M-x exclude commands marked specific to a mode that is not
   ;; enabled in the current buffer.
@@ -163,15 +168,18 @@
   (read-extended-command-predicate
    #'command-completion-default-include-p)
 
+
   ;; Smooth scrolling.
 
   (scroll-margin 0)
   (scroll-conservatively 100000)
   (scroll-preserve-screen-position 1)
 
+
   ;; Mouse. NOTE: I don't use the mouse often. Most of these are
   ;; from the newcomers user theme meant to make Emacs behave more
-  ;; like modern programs.
+  ;; like modern programs. NOTE: I actually disable the mouse/touchpad
+  ;; using Purcell's disable-mouse package.
 
   (pixel-scroll-mode t)
   (pixel-scroll-precision-mode t) ; see bug#69972
@@ -182,6 +190,7 @@
   (mouse-drag-and-drop-region-cross-program t)
   (mouse-drag-mode-line-buffer t)
   (global-xref-mouse-mode t)
+
 
   ;; As yet uncategorized.
 

@@ -11,10 +11,7 @@
 ;; were a login shell. The variable list is hard coded and specific to
 ;; my needs.
 
-;; TODO: Consider parameter/constant for variable list.
-
 ;;; Code:
-
 
 ;; If this takes more than 0.5 seconds a warning will be printed. This
 ;; can be ignored. I don't restart Emacs frequently and I don't feel a
@@ -50,7 +47,6 @@
       "MallocNanoZone"
       ))
    (exec-path-from-shell-initialize)))
-
 
 (provide 'init-macos-shell-environment)
 

@@ -1,4 +1,4 @@
-;;; init-cobol.el --- Configure various placeholders -*- lexical-binding: t; -*-
+;;; init-cobol.el --- Modern Cobol -*- lexical-binding: t; -*-
 
 ;;; Commentary:
 

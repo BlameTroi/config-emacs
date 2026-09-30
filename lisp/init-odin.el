@@ -15,11 +15,6 @@
    'eglot-server-programs
    '(odin-mode . ("ols"))))
 
-(with-eval-after-load 'odin-mode
-  (add-hook 'odin-mode-hook
-            (apply-partially #'troi/indenture +1 8))
-  (setq-local js-indent-level 8)) ; odin uses js-indent and many other things
-
 (provide 'init-odin)
 
 ;;; init-odin.el ends here.

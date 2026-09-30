@@ -2,7 +2,11 @@
 
 ;;; Commentary:
 
-;; Various eye catching highlighters.
+;; Various visual tweaks to guide the eye.
+;; - Highlight the active line.
+;; - Call out TODO items.
+;; - C-q C-l as a horizontal rule.
+;; - Dim inactive windows slightly.
 
 ;;; Code:
 
@@ -43,6 +47,22 @@
 ;; Hilight in occur. I probably need to add a few others modes.
 
 (add-hook 'occur-mode-hook #'hl-line-mode)
+
+;; Dim inactive windows.
+
+;; This package works well with the Acme theme, but not all others.
+
+(use-package dimmer
+  :ensure t
+  :custom
+  (dimmer-fraction 0.33)         ;; reduce brightness by
+  :config
+  (dimmer-configure-which-key)   ;; configure the popups and such
+  (dimmer-configure-magit)       ;; that should not trigger a change
+  (dimmer-configure-org)         ;; in brightness
+  (dimmer-mode t))
+
+;; So-long doesn't seem to fit anywhere else.
 
 (use-package so-long
   :hook

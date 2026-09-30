@@ -38,22 +38,17 @@
 ;; to analyze. There are default settings in my local config as well.
 
 (with-eval-after-load 'eglot
-  (add-to-list
-   'eglot-server-programs
-   '((c-ts-mode c++-ts-mode)
-     . ("clangd"
-        "-j=4"                   ; async index threads
-        "--log=info"             ; or "error" or "verbose"
-        "--pch-storage=memory"   ; i have plenty
-        "--enable-config"))))
-
-;; Some other clangd options:
-;; "--log=error" ;;
-;; "--background-index" ;;
-;; "--clang-tidy"  ; but i use 'astyle' to format. ;;
-;; "--completion-style=detailed" ;;
-;; "--header-insertion=never" ;;
-;; "--header-insertion-decorators=0"
+  (add-to-list 'eglot-server-programs
+               '((c-mode c++-mode c-ts-mode c++-ts-mode)
+                 . ("clangd"
+                    "-j=4"
+                    "--log=info"
+                    "--background-index"
+                    "--clang-tidy"
+                    "--completion-style=detailed"
+                    "--pch-storage=memory"
+                    "--header-insertion=never"
+                    "--header-insertion-decorators=0"))))
 
 
 (provide 'init-c)

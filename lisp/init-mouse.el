@@ -1,8 +1,8 @@
-;;; init-mouse.el --- Configure various placeholders -*- lexical-binding: t; -*-
+;;; init-mouse.el --- Disable the mouse/touchpad -*- lexical-binding: t; -*-
 
 ;;; Commentary:
 
-;; Is this better than my mosue disable hack? I hope so.
+;; I had a hack that I used in early-init but this works better.
 
 ;;; Code:
 

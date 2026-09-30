@@ -28,7 +28,6 @@
 ;; (advice-add #'project-switch-project
 ;;             :after #'troi/clear-minibuffer-message)
 
-
 (provide 'init-project)
 
 ;;; init-project.el ends here.

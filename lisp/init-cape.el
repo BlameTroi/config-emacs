@@ -2,7 +2,7 @@
 
 ;;; Commentary:
 
-;; Completion At PointE. This is highly configurable. I am using
+;; Completion At PointE. This is highly configurable but I am using
 ;; the minimalist configuration from Emacs-Bedrock.
 
 ;;; Code:

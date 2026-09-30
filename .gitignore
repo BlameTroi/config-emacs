@@ -27,7 +27,7 @@ cookies
 /tree-sitter
 /elpa
 /elpa-*
-site-lisp/package/
+/site-lisp
 /var
 /frame-restore-parameters
 /.achievements

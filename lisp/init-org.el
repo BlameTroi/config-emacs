@@ -2,7 +2,7 @@
 
 ;;; Commentary:
 
-;; This is a minimal setup. I don't expect to do a lot of work in Org.
+;; This is a minimal setup. I don't expect to do a lot of work in org.
 
 ;;; Code:
 

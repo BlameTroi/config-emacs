@@ -1,4 +1,4 @@
-;;; init-markdown.el --- Configure various placeholders -*- lexical-binding: t; -*-
+;;; init-markdown.el --- Markdown mode -*- lexical-binding: t; -*-
 
 ;;; Commentary:
 
@@ -8,7 +8,6 @@
 ;; jblevins' `markdown-mode' from melpa-stable.
 
 ;;; Code:
-
 
 (use-package markdown-mode
   :ensure t

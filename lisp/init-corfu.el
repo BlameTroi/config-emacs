@@ -1,14 +1,15 @@
-;;; init-corfu.el --- Configure various placeholders -*- lexical-binding: t; -*-
+;;; init-corfu.el --- COmpletion in Region FUnctions -*- lexical-binding: t; -*-
 
 ;;; Commentary:
 
 ;; `corfu' is COmpletion in Region FUnction. This set of `use-package'
-;; definitions will provide popups at/near the point instead of
+;; definitions will provide popups at/near point instead of
 ;; forcing your focus to the minibuffer.
 
-;; `corfu-popupinfo' is part of the `corfu' package. There is also
-;; support for text terminals in a separate package  `corfu-terminal'.
-;; As I don't use text mode, it is not included here.
+;; `corfu-popupinfo' is part of the `corfu' package.
+
+;; If I ever use text mode Emacs there is a separate `corfu-terminal'
+;; package that would be needed.
 
 ;;; Code:
 

@@ -15,13 +15,12 @@
 (use-package eldoc-box
   :ensure t
   :after eldoc
-  :pin melpa
   :diminish
   :bind (:map prog-mode-map
               ("C-h D" . eldoc-box-help-at-point))
-  :config
-  (setopt eldoc-echo-area-prefer-doc-buffer t)
-  (setopt eldoc-echo-area-use-multiline-p nil)
+  :custom
+  (eldoc-echo-area-prefer-doc-buffer t)
+  (eldoc-echo-area-use-multiline-p nil)
   :custom-face
    (eldoc-box-body ((t (:background "light green"))))
    (eldoc-box-border ((t (:background "DarkGoldenrod4")))))

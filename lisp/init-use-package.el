@@ -3,7 +3,9 @@
 ;;; Commentary:
 
 ;; Set up some `use-package' defaults and add the melpa archives to
-;; gnu and nongnu. `diminish' is loaded here as well.
+;; gnu and nongnu. `diminish' is loaded here as well. If there is
+;; diminish or lighter installed, the `:diminish' specification is
+;; quietly ignored.
 
 ;;; Code:
 

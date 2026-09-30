@@ -1,11 +1,39 @@
-;;; init-eglot.el --- Configure various placeholders -*- lexical-binding: t; -*-
+;;; init-eglot.el --- LSP via eglot -*- lexical-binding: t; -*-
 
 ;;; Commentary:
 
+;; I have a lot of old notes and comments that may not apply anymore.
+
+;; Only global eglot settings should be added here. Using a specific or
+;; non-default language server should be configured from the specific
+;; language's initialization.
+
+;; As of my last use, eglot automatically uses fortls with sensible
+;; default options.
+
+;; Finally, rather than hooking `eglot-ensure' I will follow the manual's
+;; recommendation of manually invoking `eglot' as needed.
 
 ;;; Code:
 
-;;;; Eglot:
+;; Eglot:
+
+(use-package eglot
+  :ensure t
+  :diminish "Egl"
+  :bind (:map eglot-mode-map
+              ("C-c c a" . eglot-code-actions)
+              ("C-c c o" . eglot-code-actions-organize-imports)
+              ("C-c c r" . eglot-rename))
+  :custom
+  ;; log size 0 disables logging
+  (eglot-events-buffer-config '(:size 0 :format short))
+  (eglot-autoshutdown t)
+  (eglot-ignored-server-capabilities
+   '(:documentFormattingProvider
+     :documentRangeFormattingProvider
+     :documentOnTypeFormattingProvider)))
+
 
 ;; TODO: rehome these to language specific sections.
 ;; We can start up language servers as sub-processes, be sure we can
@@ -47,46 +75,6 @@
 ;; likely be a nightmare to manage (see clangd and clang-format),
 ;; and in some cases they don't over styles i use or find tolerable.
 
-(use-package eglot
-  :ensure t
-  :pin gnu
-  ;; TODO eglot-ensure for all prog-modes considered bad, be specific.
-  :diminish "Egl"
-  :hook
-  (c-mode . eglot-ensure) (c++-mode . eglot-ensure)
-  (c-ts-mode . eglot-ensure) (c++-ts-mode . eglot-ensure)
-  (f90-mode . eglot-ensure)
-  :bind (:map eglot-mode-map
-              ("C-c c a" . eglot-code-actions)
-              ("C-c c o" . eglot-code-actions-organize-imports)
-              ("C-c c r" . eglot-rename))
-  :custom
-  ;; log size 0 disables logging
-  (eglot-events-buffer-config '(:size 0 :format short))
-  (eglot-autoshutdown t)
-  (eglot-ignored-server-capabilities '(:documentFormattingProvider
-                                       :documentRangeFormattingProvider
-                                       :documentOnTypeFormattingProvider)))
-
-;; configure clangd for eglot to my preferences. i was able to avoid
-;; the maze of (apparently) cmake generate files for clangd with these
-;; options.
-
-;; fortran defaults to fortls and its defaults work fine.
-
-(with-eval-after-load 'eglot
-  (setopt completion-category-defaults nil)
-  (add-to-list 'eglot-server-programs
-               '((c-mode c++-mode c-ts-mode c++-ts-mode)
-                 . ("clangd"
-                    "-j=4"
-                    "--log=error"
-                    "--background-index"
-                    "--clang-tidy"
-                    "--completion-style=detailed"
-                    "--pch-storage=memory"
-                    "--header-insertion=never"
-                    "--header-insertion-decorators=0"))))
 
 (provide 'init-eglot)
 

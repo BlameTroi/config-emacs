@@ -1,10 +1,11 @@
-;;; init-vc.el --- Configure various placeholders -*- lexical-binding: t; -*-
+;;; init-vc.el --- Version Control -*- lexical-binding: t; -*-
 
 ;;; Commentary:
 
 ;; My standard `early-init.el' disables all backends except for git.
-;; This is a startup speed up. I do not re-enable them since I only
-;; use git. I may add fossil at some point.
+;; This is a speeds up Emacs initialize. I do not re-enable them since
+;; I only use git. If I use another backend (fossil is a possibility) I
+;; will need to add that as well.
 
 ;;; Code:
 
@@ -19,12 +20,13 @@
   (vc-follow-symlinks t)
   (vc-use-incoming-outgoing-prefixes t))
 
-;; This is from the magit package.
+;; Git specific.
 
 ;; This is a minimal `magit' setup.
 
 ;; The following warning is generated on startup and I have not found a
-;; way to quash it. There is no `unspecified' that I can find.
+;; way to quash it. There is no `unspecified' that I can find. I do not
+;; know if this is caused by something missing in the Acme theme.
 
 ;; Warning: setting attribute ‘:background’ of face ‘magit-diff-context’: nil value is invalid, use ‘unspecified’ instead.
 

@@ -1,16 +1,12 @@
-;;; init-macros-and-functions.el --- Various initialization helpers -*- lexical-binding: t; -*-
+;;; init-macros-and-functions.el --- Various helpers -*- lexical-binding: t; -*-
 
 ;;; Commentary:
 
 ;;; Code:
 
-;; Helpful macros and functions:
-
 (require 'cl-lib)
 
-;; Various conditional macros.
-
-;;; Macos tests modified from Dimitri Fontaine's configuration:
+;; Macos tests modified from Dimitri Fontaine's configuration:
 
 (defmacro when-running-on-macos (&rest body)
   "Evaluate BODY only when running under MacOS."
@@ -26,7 +22,8 @@
        ,then
      ,else))
 
-;;;; Create a directory if it does not exist.
+
+;; Create a directory if it does not exist.
 
 (defun troi/maybe-create-directory (dir)
   "If the directory DIR doesn't exist, create it.
@@ -34,7 +31,8 @@ There is no meaningful error handling."
   (when (not (file-accessible-directory-p dir))
     (make-directory dir)))
 
-;;;; Add local directories to `load-path'.
+
+;; Add local directories to `load-path'.
 
 ;; Add child directories of parent to the `load-path'. This is
 ;; originally from Purcell.
@@ -50,7 +48,8 @@ There is no meaningful error handling."
              (expand-file-name parent-dir) t "^[^\\.]"))
            load-path))))
 
-;;;; Tear off a window and move it to a new frame.
+
+;; Tear off a window and move it to a new frame.
 
 ;; I usually run with only one maximized frame with two windows at
 ;; most. But there are times when multiple frames are warranted. This
@@ -80,7 +79,7 @@ put it in a new frame."
         (delete-window window)))))
 
 
-;;;; Narrow focus to selected region:
+;; Narrow focus to selected region:
 
 ;; this is from https://speechcode.com/blog/narrow-to-focus/ by arthur
 ;; a. gleckler.
@@ -107,7 +106,7 @@ region."
 
 ;; (define-key global-map "\C-xnf" 'troi/narrow-to-focus)
 
-;;;; Clear minibuffer message area.
+;; Clear minibuffer message area.
 
 ;;;###autoload
 (defun troi/clear-minibuffer-message (&rest _)

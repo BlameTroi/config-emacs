@@ -1,11 +1,12 @@
-;;; init-history.el --- Configure various placeholders -*- lexical-binding: t; -*-
+;;; init-template.el --- CHANGE ME -*- lexical-binding: t; -*-
 
 ;;; Commentary:
 
+;; Just a blank template.
 
 ;;; Code:
 
 
-(provide 'init-history)
+(provide 'init-template)
 
-;;; init-history.el ends here.
+;;; init-template.el ends here.

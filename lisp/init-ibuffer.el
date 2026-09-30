@@ -2,7 +2,7 @@
 
 ;;; Commentary:
 
-;; This is my tweaks to Emacs Cat's configuration.
+;; This is based on Emacs Cat's configuration.
 
 ;;; Code:
 

@@ -1,17 +1,15 @@
-;;; init-formatter.el --- Configure various placeholders -*- lexical-binding: t; -*-
+;;; init-formatter.el --- Code formatting, usually on save. -*- lexical-binding: t; -*-
 
 ;;; Commentary:
 
+;; Reformatting can be provided by an LSP that offers it, but I prefer
+;; to format on save using Purcell's reformatter package and astyle.
+
+;; TODO: Move specific language formatting options to the appropriate
+;; language specific initialization. Any hooks should also be set
+;; there.
 
 ;;; Code:
-
-;;; Pretty printing and formatting.
-
-;;;; Reformatter & astyle.
-
-;; I use 'astyle' to format C. The configuration goes in .astylerc
-;; in my home directory. My formatting is based on the 'linux' and
-;; 'k&r' styles.
 
 (use-package reformatter
   :ensure t
@@ -20,6 +18,10 @@
   (when (executable-find "astyle")
     (add-hook 'c-ts-mode-hook 'astyle-on-save-mode)
     (add-hook 'c++-ts-mode-hook  'astyle-on-save-mode)))
+
+;; I use 'astyle' to format C. The configuration goes in .astylerc
+;; in my home directory. My formatting is based on the 'linux' and
+;; 'k&r' styles.
 
 (use-package astyle
   :ensure t

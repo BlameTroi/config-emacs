@@ -2,9 +2,16 @@
 
 ;;; Commentary:
 
+;; Whitespace-mode is built in. Ws-butler is not. It does not seem to be
+;; working everywhere I think it should.
+
+;; NOTE: When I get ws-butler working I need to make sure it is not
+;; active in markdown modes.
+
 ;;; Code:
 
 (use-package whitespace
+  :diminish "WSM"
   :custom
   (whitespace-style '(face tabs tab-mark trailing))
   (whitespace-display-mappings
@@ -30,7 +37,7 @@
 
 (use-package ws-butler
   :ensure t
-  :diminish
+  :diminish "wsb"
   :hook (prog-mode))
 
 (provide 'init-whitespace)

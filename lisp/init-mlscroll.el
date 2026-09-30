@@ -7,6 +7,8 @@
 
 ;;; Code:
 
+;; TODO: Delete me.
+
 (use-package mlscroll
   :ensure t
   :config

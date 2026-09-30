@@ -2,6 +2,9 @@
 
 ;;; Commentary:
 
+;; NOTE: There are face settings floating around elsewhere, the defaults
+;; picked up from Acme are not readable.
+
 ;;; Code:
 
 (use-package tooltip

@@ -3,8 +3,8 @@
 ;;; Commentary:
 
 ;; While I'm as likely to use the full command as not, provide aliases
-;; for common M-x entries. At least one other alias can be found in
-;; init-emacs.el.
+;; for common M-x entries. An alias to redirect `yes-or-no-p' to the
+;; shorter `y-or-n-p' form is in init-emacs.el.
 
 ;;; Code:
 

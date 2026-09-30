@@ -9,22 +9,29 @@
 
 ;; Some of these might require M-x treesit-install-language-grammar.
 
+;; Review treesit-font-lock-level, it may need to very by language
+;; somehow.
+
 (use-package treesit
-  ;; :hook
-  ;; ('emacs-startup-hook . 'global-treesit-auto-mode)
-  :init
-  (setopt treesit-font-lock-level 4) ; last I looked 1-3 are useless
-  ;; (setopt major-mode-remap-alist
-  ;;         '((bash-mode . bash-ts-mode)
-  ;;           (json-mode . json-ts-mode)
-  ;;           (c-mode . c-ts-mode)
-  ;;           (go-mode . go-ts-mode)
-  ;;           (c++-mode . c++-ts-mode)
-  ;;           (c-or-c++-mode . c-or-c++-ts-mode)
-  ;;           (ruby-mode . ruby-ts-mode)))
-  )
+  :defer
+  :custom
+  (treesit-font-lock-level 4) ; last I looked 1-3 are useless
+  (major-mode-remap-alist
+          '((bash-mode . bash-ts-mode)
+            (json-mode . json-ts-mode)
+            (c-mode . c-ts-mode)
+            (go-mode . go-ts-mode)
+            (c++-mode . c++-ts-mode)
+            (c-or-c++-mode . c-or-c++-ts-mode)
+            (ruby-mode . ruby-ts-mode))))
+
+;; This may no longer be needed as treesit seems to do everything
+;; required.
 
 ;; (use-package treesit-auto
+;;     :ensure t
+;;     :hook
+;;     (emacs-startup . global-treesit-auto-mode)
 ;;     :custom
 ;;     (treesit-auto-install 'prompt)
 ;;     (treesit-auto-add-to-auto-mode-alist 'all)

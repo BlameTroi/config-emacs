@@ -3,7 +3,7 @@
 ;;; Commentary:
 
 ;; I'm currently using only flymake. Steve Purcell has a flycheck to
-;; flymake adapter if I end up wanting some of the flycheck modules.
+;; flymake adapter if I end up wanting to use any of the flycheck modules.
 
 ;; TODO: Does prog-mode encompass all of these or do I need to have
 ;; separate hooks?

@@ -10,20 +10,22 @@
 
 ;;; Code:
 
-;; Set the ispell program name to aspell
-;; (switching to aspell will generally offer better performance than
-;; ispell.)
+;; Set the ispell program name to aspell (switching to aspell will
+;; generally offer better performance than ispell.)
 
 (setq ispell-program-name "aspell")
 
 ;; Set the global default dictionary for the Ispell process.
+
 (setq ispell-dictionary "en_US")
 
 ;; Reduce unnecessary messages when checking individual words.
+
 (setq ispell-quietly t)
 
 ;; Configure Aspell's suggestion mode to "ultra", which favors very
 ;; close spelling and phonetic matches when generating suggestions.
+
 (setq ispell-extra-args '("--sug-mode=ultra"))
 
 (defun troi/flyspell-prog-mode (&rest _args)

@@ -4,6 +4,8 @@
 
 ;; Movement and navigation aids.
 
+;; TODO: dumbjump?
+
 ;;; Code:
 
 ;; Visual jump to transient markers. The cuctom setting limits the

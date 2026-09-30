@@ -1,4 +1,4 @@
-;;; init-vertico.el --- Configure various placeholders -*- lexical-binding: t; -*-
+;;; init-vertico.el --- Vertical presentation of completion options -*- lexical-binding: t; -*-
 
 ;;; Commentary:
 
