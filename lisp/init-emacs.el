@@ -54,6 +54,10 @@
   ;; Use this rather than the Easy Customization UI or the `setopt'
   ;; form.
 
+  ;; Ignore the customization file itself.
+
+  (custom-file (locate-user-emacs-file "ignored-custom.el"))
+
   ;; Some personalization.
 
   (user-full-name "Troy Brumley")

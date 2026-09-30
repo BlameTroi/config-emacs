@@ -48,7 +48,7 @@
 ;; The flyspell package is a built-in Emacs minor mode that provides
 ;; on-the-fly spell checking. It highlights misspelled words as you
 ;; type, offering interactive corrections.
-(defun my/flyspell-enable-appropriate-mode ()
+(defun troi/flyspell-enable-appropriate-mode ()
   "Enable the appropriate Flyspell mode based on the current major
 mode."
   (if (or (derived-mode-p 'conf-mode)
