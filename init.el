@@ -3,11 +3,19 @@
 
 ;;; Commentary:
 
-;; This is a configuration. It is not a program, and while it is for Emacs
-;; it is not a part of Emacs. In case this should be copyrighted,
+;; This is a configuration. While it includes executable code is not a
+;; "program" in the traditional sense. While it is FOR Emacs it is NOT
+;; a part of Emacs.
+
+
+;; In case this should be copyrighted:
 ;; (c) 2026 Troy Brumley <blametroi@gmail.com>.
 
-;; With that out of the way, I consider this to be in the public domain.
+;; In case this should be licensed:
+;; I release this to the public domain under the terms of the UNLICENSE.
+
+
+;; With that out of the way, let's get started.
 
 
 ;;;; OVERVIEW:
@@ -126,8 +134,9 @@
 
 ;; CHANGE LOG:
 
-;; 2026/09/30 Recreated from old configurations and the
-;;            latest from Purcell and Wiersdorf.
+;; 2026/09/__  Recreated from old configurations with borrowings
+;;    to       from Stavrou, Purcell, Wiersdorf, O'Connor,
+;; 2026/10/01  Peterson, Cherti, and many others.
 
 ;;; Code:
 
