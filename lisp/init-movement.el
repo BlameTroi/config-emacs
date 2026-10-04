@@ -28,6 +28,8 @@
   (global-set-key (kbd "M-o") 'ace-window)
   (setq aw-keys '(?a ?s ?d ?f ?g ?h ?j ?k ?l)))
 
+;; TODO: ace-window does not recognize treemacs pane.
+
 ;; TODO: dumbjump, xref.
 ;; (require 'dumb-jump)
 ;; (add-hook 'xref-backend-functions-hook #'dumb-jump-xref-activate)

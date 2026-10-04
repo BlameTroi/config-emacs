@@ -32,24 +32,25 @@
                 " " filename)))
   (setq ibuffer-saved-filter-groups
         '(("Main"
-           ("Directories" (mode . dired-mode))
-           ;; I need to add a few and delete a few of these.
+           ("Directories" (or
+			   (mode . dired-mode)
+			   (mode . dired-sidebar-mode)))
            ("Code" (or
-                   (mode . emacs-lisp-mode)
-                   (mode . c++-mode)
-                   (mode . c++-ts-mode)
-                   (mode . c-mode)
-                   (mode . c-ts-mode)
-                   (mode . python-ts-mode)
-                   (mode . python-mode)
-                   (mode . odin-mode)
-                   (mode . odin-ts-mode)
-                   (mode . ruby-mode)
-                   (mode . ruby-ts-mode)
-                   (mode . cobol-mode)
-                   (mode . fortran-mode)
-                   (mode . f90-mode)
-                   (mode . c-or-c++-ts-mode)))
+                    (mode . emacs-lisp-mode)
+                    (mode . c++-mode)
+                    (mode . c++-ts-mode)
+                    (mode . c-mode)
+                    (mode . c-ts-mode)
+                    (mode . python-ts-mode)
+                    (mode . python-mode)
+                    (mode . odin-mode)
+                    (mode . odin-ts-mode)
+                    (mode . ruby-mode)
+                    (mode . ruby-ts-mode)
+                    (mode . cobol-mode)
+                    (mode . fortran-mode)
+                    (mode . f90-mode)
+                    (mode . c-or-c++-ts-mode)))
            ("Build" (or
                      (mode . make-mode)
                      (mode . ninja-mode)
@@ -86,8 +87,8 @@
                   (mode . js-mode)
                   (mode . rjsx-mode)))
            ("Markup" (or
-                   (mode . markdown-mode)
-                   (mode . adoc-mode)))
+                      (mode . markdown-mode)
+                      (mode . adoc-mode)))
            ("Org" (mode . org-mode))
            ("Magit" (or
                      (mode . magit-blame-mode)

@@ -68,6 +68,30 @@
   :hook
   (emacs-startup . global-so-long-mode))
 
+;; TODO: These may be useful but they are almost invisible using the
+;; Acme theme.
+
+;; ;; Experimental highlight word or symbol at point. This may be too
+;; ;; noisy.
+;; 
+;; ;; Highlights the word/symbol at point and any other occurrences in
+;; ;; view. Also allows to jump to the next or previous occurrence.
+;; ;; https://github.com/nschum/highlight-symbol.el
+;; (use-package highlight-symbol
+;;   :ensure t
+;;   :config
+;;   (setq highlight-symbol-on-navigation-p t)
+;;   (add-hook 'prog-mode-hook 'highlight-symbol-mode))
+;; 
+;; ;; Also experimental and maybe too noisy.
+;; 
+;; ;; Emacs minor mode that highlights numeric literals in source code.
+;; ;; https://github.com/Fanael/highlight-numbers
+;; (use-package highlight-numbers
+;;   :ensure t
+;;   :config
+;;   (add-hook 'prog-mode-hook 'highlight-numbers-mode))
+
 (provide 'init-display-helpers)
 
 ;;; init-display-helpers.el ends here.

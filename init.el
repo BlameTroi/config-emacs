@@ -3,9 +3,9 @@
 
 ;;; Commentary:
 
-;; This is a configuration. While it includes executable code is not a
-;; "program" in the traditional sense. While it is FOR Emacs it is NOT
-;; a part of Emacs.
+;; This is a configuration. While it includes executable code it is
+;; not a "program" in the traditional sense. While it is FOR Emacs it
+;; is NOT a part of Emacs.
 
 
 ;; In case this should be copyrighted:
@@ -131,6 +131,9 @@
 
 ;; Organize key bindings.
 
+;; Bring C/Eglot/Astyle configuration up to date.
+
+;; ace-window does not recognize the treemacs pane.
 
 ;; CHANGE LOG:
 
@@ -215,78 +218,18 @@
 (require 'init-dired)      ;; configure gls, dired behavior
 (require 'init-ibuffer)    ;; group buffers by type
 (require 'init-searching)  ;; isearch, grep, rg
-(require 'init-diff)       ;; basic diff and ediff
 
 
-;;;;; Tabification.
+;; Textual healing.
 
-;; Why can't all the languages out there do this correctly?
-
-;; And yes, I am aware of both directory locals and editor config.
-
-;; Some (most) of the following is from:
-;; https://dougie.io/emacs/indentation/
-
-;; Some modes are better with tabs as tabs, others with tabs as
-;; spaces. First, we'll set the default to act as a classical teletype
-;; terminal. Then, adjust based on the main mode.
-
-(setopt tab-width 8)
-(setopt indent-tabs-mode t)
-(setopt standard-indent 8)
-
-(defun troi/indenture (setting width)
-  "Parameterized resetting of tabs vs spaces.
-In an ideal world, everyone would use 8 space tabs. Sadly, the
-world is far from ideal.
-
-SETTING is an integer argument to `indent-tabs-mode', refer to
-its documentation string.
-
-WIDTH is the number of spaces a tab span, or appear to span, on
-your display.
-
-Use this if the `troi/enable-tabs' defaults are not sufficient."
-  (indent-tabs-mode setting)
-  (setq tab-width width))
-
-(defconst troi/custom-tab-width 3) ; 2 is too few, 4 is too much.
-(defconst troi/default-tab-width 8)
-
-(defun troi/disable-tabs ()
-  "Disable tabs."
-  (setq indent-tabs-mode nil))
-
-(defun troi/enable-tabs  ()
-  "Enable tabs."
-  ;; don't change TAB, I use it for completion.
-  ;; (local-set-key (kbd "TAB") 'tab-to-tab-stop)
-  (setq-local indent-tabs-mode t)
-  (setq-local tab-width troi/custom-tab-width))
-
-;; Add hooks to enable and disable tabs to my preferences.
-
-(add-hook 'prog-mode-hook 'troi/enable-tabs)
-
-(add-hook 'lisp-mode-hook 'troi/disable-tabs)
-(add-hook 'emacs-lisp-mode-hook 'troi/disable-tabs)
-
-;; Language-Specific Tweaks could be done as follows:
-
-;; (setq-default python-indent-offset custom-tab-width) ;; Python
-;; (setq-default js-indent-level custom-tab-width)      ;; Javascript
-
-;; Making electric-indent behave sanely
-
-(setq-default electric-indent-inhibit t)
-
+(require 'init-editorconfig)  ;; I am so not a fan.
 
 
 ;;;;; Discoverability aids.
 
 (require 'init-which-free-keys)  ;; key does what exactly
 (require 'init-display-helpers)  ;; highlights, line lengths
-(require 'init-whitespace)       ;; show it
+(require 'init-whitespace)       ;; show it, clean it up
 (require 'init-info-readers)     ;;
 (require 'init-eldoc)            ;; and eldoc-box
 (require 'init-tooltip)          ;; popups
@@ -300,10 +243,17 @@ Use this if the `troi/enable-tabs' defaults are not sufficient."
 
 ;;;; Applications and utilities.
 
-(require 'init-org)       ;; because org
-(require 'init-markdown)  ;; can't escape it
-(require 'init-mpages)    ;; a diary of sorts
+(require 'init-org)            ;; because org
+(require 'init-markdown)       ;; can't escape it
+(require 'init-mpages)         ;; a diary of sorts
 ;; deft? spreadsheet, etc.
+(require 'init-treemacs)       ;; treeview for projects
+(require 'init-dired-sidebar)  ;; directory treeview/navigation
+(require 'init-diff)           ;; basic diff and ediff
+(require 'init-dircmp)         ;; compare directories
+
+
+
 
 
 ;;;; Programming and version control:
@@ -550,9 +500,8 @@ Use this if the `troi/enable-tabs' defaults are not sufficient."
 
 ;;;; Things that must be done last.
 
-;; Items grouped here (currently dimmer and aliases) seem best done last.
+;; Items grouped here are best done last.
 
-(require 'init-dimmer)
 (require 'init-aliases)  ;; do this last
 
 (provide 'init)
