@@ -18,6 +18,19 @@
 ;; With that out of the way, let's get started.
 
 
+;;;; To be aware of:
+
+;; MacOS 27 and native compilation have some sort of versioning
+;; conflict. See (setq native-comp-driver-options ...) after the
+;; ;;; Code: tag.
+
+;; I use some non-elpa packages and am not currently loading them from
+;; vc because they have needed minor changes. Specifically odin-mode
+;; and the acme-emacs-theme. I also don't like relying on forge
+;; copies, they could change, disappear, or be moved to a different
+;; forge.
+
+
 ;;;; OVERVIEW:
 
 ;; I am running GUI Emacs 31 and its capabilities are assumed
@@ -135,6 +148,10 @@
 
 ;; ace-window does not recognize the treemacs pane.
 
+;; As noted above, MacOS 27 work-around and figure out how to
+;; deal with non-Elpa packages.
+
+
 ;; CHANGE LOG:
 
 ;; 2026/09/__  Recreated from old configurations with borrowings
@@ -147,6 +164,17 @@
 ;;;; Bootstrap and compatibility warnings.
 
 ;;;;;; `use-package' is NOT available. ---------------------------------
+
+;;;;;; vvv fix problem with libgccjit native compilation after MacOS 27 upgrade.
+
+;; See https://github.com/caldwell/build-emacs/issues/158
+;; Put this somewhere early in .emacs.d/init.el
+(require 'comp)
+(setq native-comp-driver-options (cons "-mmacosx-version-min=11" native-comp-driver-options))
+(message "*** native-comp-driver-options changed for MacOS 27 issues ***")
+
+;;;;;; ^^^ fix problem with libgccjit native compilation after MacOS 27 upgrade.
+
 
 (setopt debug-on-error t)
 (require 'cl-lib)
@@ -281,7 +309,8 @@
 (require 'init-fortran) ;; 77, IV, F90, F95, Modern
 (require 'init-git)     ;; as distinct from the magit application
 (require 'init-lisps)   ;; elisp and code common to schemes
-(require 'init-odin)    ;;
+;; (require 'init-odin)    ;; not an elpa module
+
 ;; pascal, python, ruby, assembly, etc.
 
 
@@ -315,37 +344,46 @@
 ;; ELPA at some point.
 
 (setopt custom-safe-themes t)
-(require 'acme-theme)
-(mapc #'disable-theme custom-enabled-themes)
-(load-theme 'acme t)
 
 (custom-theme-set-faces
  'user
  '(default
    ((t
-     (:font "CaskaydiaMono Nerd Font"
-            :height 155
-            :width expanded))))
- '(fixed-pitch
-   ((t
-     (:font "CaskaydiaMono Nerd Font"
-            :height 155))))
- '(compilation-error
-   ((t
-     (:background "gray80"
-                  :foreground "Red"))))
- '(corfu-default
-   ((t
-     (:foreground "#0f0f01"))))
- '(flymake-error
-   ((t
-     (:underline
-      (:color "Red"
-              :style wave)))))
- '(font-lock-comment-face
-   ((t
-     (:foreground "#007700" ; or #005500?
-                  :slant italic)))))
+     (:height 150 :width expanded)))))
+
+;; (with-demoted-errors
+;;     (progn
+;;       (require 'acme-theme)
+;; (mapc #'disable-theme custom-enabled-themes)
+;; (load-theme 'acme t)
+;;
+;; (custom-theme-set-faces
+;;  'user
+;;  '(default
+;;    ((t
+;;      (:font "CaskaydiaMono Nerd Font"
+;;             :height 155
+;;             :width expanded))))
+;;  '(fixed-pitch
+;;    ((t
+;;      (:font "CaskaydiaMono Nerd Font"
+;;             :height 155))))
+;;  '(compilation-error
+;;    ((t
+;;      (:background "gray80"
+;;                   :foreground "Red"))))
+;;  '(corfu-default
+;;    ((t
+;;      (:foreground "#0f0f01"))))
+;;  '(flymake-error
+;;    ((t
+;;      (:underline
+;;       (:color "Red"
+;;               :style wave)))))
+;;  '(font-lock-comment-face
+;;    ((t
+;;      (:foreground "#007700" ; or #005500?
+;;                   :slant italic)))))))
 
 ;; (use-package acme-theme
 ;;   :ensure t
