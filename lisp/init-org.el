@@ -20,10 +20,11 @@
   (org-mode . visual-line-mode)
   (org-mode . variable-pitch-mode)
   :custom
-  (org-directory org-dir)
-  (org-agenda-files org-dir)
-  (org-log-done 'time)
-  (org-return-follows-link t)
+  (org-support-shift-select 'always)
+  (org-directory             org-dir)
+  (org-agenda-files          org-dir)
+  (org-log-done              'time)
+  (org-return-follows-link   t)
   ;;(setopt org-hide-emphasis-markers t)
   ;; some sample keybinds and a template to use for use-package
   ;; :bind (:map

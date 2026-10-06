@@ -22,7 +22,7 @@
 
 ;; MacOS 27 and native compilation have some sort of versioning
 ;; conflict. See (setq native-comp-driver-options ...) after the
-;; ;;; Code: tag.
+;; Code tag.
 
 ;; I use some non-elpa packages and am not currently loading them from
 ;; vc because they have needed minor changes. Specifically odin-mode
@@ -158,6 +158,11 @@
 ;;    to       from Stavrou, Purcell, Wiersdorf, O'Connor,
 ;; 2026/10/01  Peterson, Cherti, and many others.
 
+;; 2026/10/05  MacOS 27 work around.
+;;             Add flag for "don't load site-lisp" items. You must
+;;             guard the setup for site-lisp packages with a when.
+
+
 ;;; Code:
 
 
@@ -170,15 +175,50 @@
 ;; See https://github.com/caldwell/build-emacs/issues/158
 ;; Put this somewhere early in .emacs.d/init.el
 (require 'comp)
-(setq native-comp-driver-options (cons "-mmacosx-version-min=11" native-comp-driver-options))
-(message "*** native-comp-driver-options changed for MacOS 27 issues ***")
+(setq native-comp-driver-options
+      (cons "-mmacosx-version-min=11" native-comp-driver-options))
+(display-warning
+ 'local-init
+ "*** native-comp-driver-options changed for MacOS 27 issues ***")
 
 ;;;;;; ^^^ fix problem with libgccjit native compilation after MacOS 27 upgrade.
+
 
 
 (setopt debug-on-error t)
 (require 'cl-lib)
 
+;;;;; Check for and create required directories.
+
+(defvar my/lisp-directory
+  (expand-file-name "lisp" user-emacs-directory)
+  "The lisp subdirectory must exist and hold configuration files.")
+
+(defvar my/site-lisp-directory
+  (expand-file-name "site-lisp" user-emacs-directory)
+  "The site-lisp directory will be created if it does not exist.
+If it does not, or it is empty, some parts of this configuration
+are skipped or altered.")
+
+(defvar my/site-lisp-missing-or-empty nil
+  "This guards against file not found errors during a fresh install.")
+
+(when (not (file-directory-p my/lisp-directory))
+  (error "No subdirectory lisp found under user emacs directory!"))
+
+(when (not (file-directory-p my/site-lisp-directory))
+  (display-warning
+   'local-init
+   "No subdirectory site-lisp found under user emacs directory! Creating empty site-lisp subdirectory.")
+  (make-directory my/site-lisp-directory)
+  (setq my/site-lisp-missing-or-empty t))
+
+(when (not my/site-lisp-missing-or-empty)
+  (when (< (length (directory-files my/site-lisp-directory nil nil t)) 3)
+    (display-warning
+     'local-init
+     "Subdirectory site-lisp appears to be empty.")
+    (setq my/site-lisp-missing-or-empty t)))
 
 ;;;;; Add subdirectory `lisp' to the load path.
 
@@ -195,21 +235,23 @@
   (error "Emacs version 31 or newer required!"))
 
 (when (not (display-graphic-p))
-  (message "GUI Emacs is assumed. Some things may break in a TUI.")
-  (sleep-for 5))
+  (display-warning
+   'local-init
+   "GUI Emacs is assumed. Some things may break in a TUI."))
 
 (when-not-running-on-macos
-  (message "MacOS is assumed. Some things likely will break.")
-  (sleep-for 5))
+ (display-warning
+  'local-init
+  "MacOS is assumed. Some things likely will break." :warning))
 
 
 ;;;;; Add `site-lisp', its subdirectories, and `lisp's subdirectories to load-path.
 
-(push (expand-file-name "lisp" user-emacs-directory) load-path)
-(troi/add-subdirs-to-load-path (expand-file-name "lisp/" user-emacs-directory))
+(push my/lisp-directory load-path)
+(troi/add-subdirs-to-load-path my/lisp-directory)
 
-(push (expand-file-name "site-lisp" user-emacs-directory) load-path)
-(troi/add-subdirs-to-load-path (expand-file-name "site-lisp/" user-emacs-directory))
+(push my/site-lisp-directory load-path)
+(troi/add-subdirs-to-load-path my/site-lisp-directory)
 
 
 ;;;;; Configure `package' and `use-package':
@@ -281,26 +323,27 @@
 (require 'init-dircmp)         ;; compare directories
 
 
-
-
-
 ;;;; Programming and version control:
+
 
 ;;;;; Version control, git, and project management.
 
 (require 'init-vc)         ;; including magit
 (require 'init-project)    ;; not projectile
 
+
 ;;;;; Modern language mode infrastructure.
 
 (require 'init-eglot)      ;; lsp
 (require 'init-treesit)    ;; better faster language modes
+
 
 ;;;;; Shell, compile, format:
 
 (require 'init-shell)      ;; eshell & eat
 (require 'init-compile)    ;; as yet unwritten
 (require 'init-formatter)  ;; format on save, not lsp formatters
+
 
 ;;;;; Language specific configuration.
 
@@ -309,7 +352,11 @@
 (require 'init-fortran) ;; 77, IV, F90, F95, Modern
 (require 'init-git)     ;; as distinct from the magit application
 (require 'init-lisps)   ;; elisp and code common to schemes
-;; (require 'init-odin)    ;; not an elpa module
+
+;; Comment out the following require if odin-mode is not in site-lisp
+;; yet.
+
+(require 'init-odin)    ;; not an elpa module
 
 ;; pascal, python, ruby, assembly, etc.
 
@@ -345,45 +392,49 @@
 
 (setopt custom-safe-themes t)
 
-(custom-theme-set-faces
- 'user
- '(default
-   ((t
-     (:height 150 :width expanded)))))
+;; If acme theme isn't in site-lisp, uncomment this to get fonts
+;; to a readable size and comment out the lines following from
+;; the require through to the custom-theme-set-faces.
 
-;; (with-demoted-errors
-;;     (progn
-;;       (require 'acme-theme)
-;; (mapc #'disable-theme custom-enabled-themes)
-;; (load-theme 'acme t)
-;;
 ;; (custom-theme-set-faces
 ;;  'user
 ;;  '(default
 ;;    ((t
-;;      (:font "CaskaydiaMono Nerd Font"
-;;             :height 155
-;;             :width expanded))))
-;;  '(fixed-pitch
-;;    ((t
-;;      (:font "CaskaydiaMono Nerd Font"
-;;             :height 155))))
-;;  '(compilation-error
-;;    ((t
-;;      (:background "gray80"
-;;                   :foreground "Red"))))
-;;  '(corfu-default
-;;    ((t
-;;      (:foreground "#0f0f01"))))
-;;  '(flymake-error
-;;    ((t
-;;      (:underline
-;;       (:color "Red"
-;;               :style wave)))))
-;;  '(font-lock-comment-face
-;;    ((t
-;;      (:foreground "#007700" ; or #005500?
-;;                   :slant italic)))))))
+;;    (:height 150 :width expanded)))))
+
+;; begin block to comment
+(require 'acme-theme)
+(mapc #'disable-theme custom-enabled-themes)
+(load-theme 'acme t)
+
+(custom-theme-set-faces
+ 'user
+ '(default
+   ((t
+     (:font "CaskaydiaMono Nerd Font"
+            :height 155
+            :width expanded))))
+ '(fixed-pitch
+   ((t
+     (:font "CaskaydiaMono Nerd Font"
+            :height 155))))
+ '(compilation-error
+   ((t
+     (:background "gray80"
+                  :foreground "Red"))))
+ '(corfu-default
+   ((t
+     (:foreground "#0f0f01"))))
+ '(flymake-error
+   ((t
+     (:underline
+      (:color "Red"
+              :style wave)))))
+ '(font-lock-comment-face
+   ((t
+     (:foreground "#007700" ; or #005500?
+                  :slant italic)))))
+;; end block to comment
 
 ;; (use-package acme-theme
 ;;   :ensure t

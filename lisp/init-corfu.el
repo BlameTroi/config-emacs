@@ -8,8 +8,7 @@
 
 ;; `corfu-popupinfo' is part of the `corfu' package.
 
-;; If I ever use text mode Emacs there is a separate `corfu-terminal'
-;; package that would be needed.
+;; *** The `corfu-terminal' package is not needed in Emacs 31 ***
 
 ;;; Code:
 
