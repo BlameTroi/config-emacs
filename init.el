@@ -203,6 +203,9 @@ are skipped or altered.")
 (defvar my/site-lisp-missing-or-empty nil
   "This guards against file not found errors during a fresh install.")
 
+(defvar my/use-elpa-theme nil
+  "Theme can be loaded from elpa.")
+
 (when (not (file-directory-p my/lisp-directory))
   (error "No subdirectory lisp found under user emacs directory!"))
 
@@ -353,10 +356,10 @@ are skipped or altered.")
 (require 'init-git)     ;; as distinct from the magit application
 (require 'init-lisps)   ;; elisp and code common to schemes
 
-;; Comment out the following require if odin-mode is not in site-lisp
-;; yet.
-
-(require 'init-odin)    ;; not an elpa module
+(if my/site-lisp-missing-or-empty
+    (message "Skipping odin-mode")
+  (progn (message "loading odin-mode")
+         (require 'init-odin)))    ;; not an elpa module
 
 ;; pascal, python, ruby, assembly, etc.
 
@@ -370,161 +373,29 @@ are skipped or altered.")
 
 ;;;; Icons, themes, faces, and other visuals. *bling*
 
-;;;;; Item icons via `nerd' and `kind'.
+(setopt custom-safe-themes t)
 
 (require 'init-nerd)      ;; and kind icons
 
 
+(if my/use-elpa-theme
+    (require 'init-elpa-theme)
+  (if my/site-lisp-missing-or-empty
+      (progn
+        (message "Skipping packaged theme and using manoj-dark.")
+        ;; The manoj-dark theme could use a few tweaks but it's
+        ;; a good built in default.
+        (setopt custom-enabled-themes '(manoj-dark))
+        (custom-theme-set-faces
+         'user
+         '(default
+           ((t
+             (:height 150 :width expanded))))))
+    (progn
+      (message "Loading local theme.")
+      (require 'init-local-theme))))
+
 ;;;;; Theme:
-
-;; Many themes are not in ELPA. I have cloned the repositories for
-;; `nofrils-acme-theme', `acme-emacs-theme', and `plan9' to my
-;; `site-lisp' directory. There is an `acme-theme' in the
-;; _melpa-stable_ archive but it is not configured correctly. It is
-;; missing the `acme-theme-autoloads.el'.
-
-;; Examining diffs of `acme-emacs-theme' and `acme-theme' shows that
-;; they are versions of each other. It is not immediately obvious
-;; which one is more recent but the overlap is significant and both
-;; work for me. I've decided to move forward with the
-;; `acme-emacs-theme' and may make changes and try to package it for
-;; ELPA at some point.
-
-(setopt custom-safe-themes t)
-
-;; If acme theme isn't in site-lisp, uncomment this to get fonts
-;; to a readable size and comment out the lines following from
-;; the require through to the custom-theme-set-faces.
-
-;; (custom-theme-set-faces
-;;  'user
-;;  '(default
-;;    ((t
-;;    (:height 150 :width expanded)))))
-
-;; begin block to comment
-(require 'acme-theme)
-(mapc #'disable-theme custom-enabled-themes)
-(load-theme 'acme t)
-
-(custom-theme-set-faces
- 'user
- '(default
-   ((t
-     (:font "CaskaydiaMono Nerd Font"
-            :height 155
-            :width expanded))))
- '(fixed-pitch
-   ((t
-     (:font "CaskaydiaMono Nerd Font"
-            :height 155))))
- '(compilation-error
-   ((t
-     (:background "gray80"
-                  :foreground "Red"))))
- '(corfu-default
-   ((t
-     (:foreground "#0f0f01"))))
- '(flymake-error
-   ((t
-     (:underline
-      (:color "Red"
-              :style wave)))))
- '(font-lock-comment-face
-   ((t
-     (:foreground "#007700" ; or #005500?
-                  :slant italic)))))
-;; end block to comment
-
-;; (use-package acme-theme
-;;   :ensure t
-;;   :config
-;;   (load-theme 'acme t)
-;;   :custom-face
-;;   (default
-;;    ((t
-;;      (:font "CaskaydiaMono Nerd Font"
-;;       :height 155
-;;       :width 'expanded))))
-;;   (fixed-pitch
-;;    ((t
-;;      (:font "CaskaydiaMono Nerd Font"
-;;       :height 155))))
-;;   (compilation-error
-;;    ((t
-;;      (:background "gray80"
-;;      :foreground "Red"))))
-;;   (corfu-default
-;;    ((t
-;;      (:foreground "#0f0f01"))))
-;;   (flymake-error
-;;    ((t
-;;      (:underline
-;;       (:color "Red"
-;;        :style wave)))))
-;;   (font-lock-comment-face
-;;    ((t
-;;      (:foreground "#707070" ; or #005500?
-;;       :slant 'italic)))))
-
-;; (with-eval-after-load hl-line-mode
-;; (set-face-attribute 'hl-line nil :inherit 'highlight :extend t :underline nil :background "LightGoldenrod2" :foreground "black")
-;; )
-
-;;;;; Additional or customized Faces:
-
-;; (set-face-attribute 'default nil
-;; 		    :font "FiraCode Nerd Font Mono"
-;; 		    :height 190)
-;; (set-face-attribute 'fixed-pitch nil
-;; 		    :font "FiraCode Nerd Font Mono"
-;; 		    :height 190)
-;; (set-face-attribute 'variable-pitch nil
-;; 		    :font "Cantarell"
-;; 		    :height 230
-;; 		    :weight 'medium)
-
-;; (set-face-attribute 'default nil
-;; 		    :family "Iosevka")
-;; (set-face-attribute 'variable-pitch nil
-;; 		    :family "Iosevka Aile")
-
-
-;; The built in `manoj-dark' theme is new to me. It's
-;; very good but it needs some tweaks for my use.
-
-;;(setopt custom-enabled-themes '(manoj-dark))
-
-;; The sepia version is the most readable for me on
-;; my Macbook.
-
-;; nofrils-sepia desired, newcomers-presets is actually a bunch
-;; of options settings.
-
-;; (setopt custom-safe-themes t)
-;; (require 'nofrils-sepia-theme)
-;; (load-theme 'nofrils-sepia t)
-;; corfu-default face change foreground
-
-;; In prior years I kept returning to the `acme-theme'.
-;; It's very easy on the eyes, moreso than high contrast
-;; "hard" black background themes.
-
-;; In case I want to use it again:
-
-;; (set-face-attribute 'default nil :font "CaskaydiaMono Nerd Font" :height 155 :width 'expanded)
-;; (set-face-attribute 'fixed-pitch nil :font "CaskaydiaMono Nerd Font" :height 155)
-;; (set-face-attribute 'compilation-error nil :background "gray80" :foreground "Red")
-;; (set-face-attribute 'corfu-default nil :foreground "#0f0f01")
-;; (set-face-attribute 'flymake-error nil :underline `(:color "Red" :style wave))
-;; (set-face-attribute 'font-lock-comment-face nil :foreground "#707069" :slant 'italic) ; or 005500?
-;; (with-eval-after-load hl-line-mode
-;; (set-face-attribute 'hl-line nil :inherit 'highlight :extend t :underline nil :background "LightGoldenrod2" :foreground "black")
-;; )
-;; '(default ((t (:family "CaskaydiaMono Nerd Font" :foundry "nil" :slant normal :weight regular :height 155 :width expanded))))
-;; (set-face-attribute 'default nil :family "CaskaydiaMono Nerd Font" :foundry "nil" :slant normal :weight regular :height 155 :width expanded)
-;; (set-face-attribute 'default nil :font "FiraCode Nerd Font Mono" :height 190)
-;; (set-face-attribute 'variable-pitch nil :font "Cantarell" :height 180 :weight 'medium)
 
 
 ;;;; Keybinding:
