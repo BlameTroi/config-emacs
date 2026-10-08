@@ -62,14 +62,15 @@
 ;; Setting customizable options should be done via `setopt' or as an
 ;; entry under the `use-package' `:custom' header.
 
-;; Most options are "owned" by a feature as part of a faux package.
+;; Emacs options are owned or grouped by a feature. These features
+;; could be `require'd but is instead invoked via `use-package'.
 ;; `use-package' can be used to collect the options and keep other
 ;; initializations (faces, hooks) close to each other.
 
 
 ;; `use-package' can be used on anything that returns t from `featurep'.
-;; Emacs itself is a "feature" as are `dired', `recentf',`eshell', and
-;; etc.
+;; Emacs itself is a feature (or package), as are `dired', `recentf',
+;; `eshell', and etc.
 
 
 ;;;; INSPIRATIONS:
@@ -112,10 +113,9 @@
 ;; introduce.
 
 
-;; If you are just starting out with Emacs I recommend that you start
-;; with Emacs-Bedrock and build out from there. It provides a useful
-;; Emacs configuration using some of the recent options for
-;; completions and language support.
+;; For beginners I recommend starting with Emacs-Bedrock. It provides
+;; a well documented and structured configuration that is small enough
+;; to be grokked by those just getting started with Emacs.
 
 
 ;;;; BUGS AND TO DO:
@@ -162,6 +162,9 @@
 ;;             Add flag for "don't load site-lisp" items. You must
 ;;             guard the setup for site-lisp packages with a when.
 
+;; 2026/10/08  Clean up documentation, standardize naming to "my/",
+;;             and move the MacOS 27 work around from init.el to
+;;             early-init.el.
 
 ;;; Code:
 
@@ -169,21 +172,6 @@
 ;;;; Bootstrap and compatibility warnings.
 
 ;;;;;; `use-package' is NOT available. ---------------------------------
-
-;;;;;; vvv fix problem with libgccjit native compilation after MacOS 27 upgrade.
-
-;; See https://github.com/caldwell/build-emacs/issues/158
-;; Put this somewhere early in .emacs.d/init.el
-(require 'comp)
-(setq native-comp-driver-options
-      (cons "-mmacosx-version-min=11" native-comp-driver-options))
-(display-warning
- 'local-init
- "*** native-comp-driver-options changed for MacOS 27 issues ***")
-
-;;;;;; ^^^ fix problem with libgccjit native compilation after MacOS 27 upgrade.
-
-
 
 (setopt debug-on-error t)
 (require 'cl-lib)
@@ -251,10 +239,10 @@ are skipped or altered.")
 ;;;;; Add `site-lisp', its subdirectories, and `lisp's subdirectories to load-path.
 
 (push my/lisp-directory load-path)
-(troi/add-subdirs-to-load-path my/lisp-directory)
+(my/add-subdirs-to-load-path my/lisp-directory)
 
 (push my/site-lisp-directory load-path)
-(troi/add-subdirs-to-load-path my/site-lisp-directory)
+(my/add-subdirs-to-load-path my/site-lisp-directory)
 
 
 ;;;;; Configure `package' and `use-package':
@@ -403,8 +391,8 @@ are skipped or altered.")
 ;; TODO: These are defined in `init-macros-and-functions'. Standardize
 ;; binding and move to its own section.
 
-(bind-key "C-x 5t" #'troi/tear-off-window) ;; defined in i-m-a-f
-(define-key global-map "\C-xnf" 'troi/narrow-to-focus)
+(bind-key "C-x 5t" #'my/tear-off-window) ;; defined in i-m-a-f
+(define-key global-map "\C-xnf" 'my/narrow-to-focus)
 
 (keymap-set minibuffer-mode-map "TAB" 'minibuffer-complete) ; TAB acts more like how it does in the shell
 

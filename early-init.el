@@ -25,12 +25,33 @@
 
 ;; TODO: GCMH at some point.
 
-(defvar troi/gc-cons-threshold gc-cons-threshold)
-(defvar troi/gc-cons-percentage gc-cons-percentage)
+(defvar my/gc-cons-threshold
+  gc-cons-threshold
+  "Save gc threshold.")
+(defvar my/gc-cons-percentage
+  gc-cons-percentage
+  "Save gc threshold percentage.")
 (setopt gc-cons-threshold most-positive-fixnum)
 (setopt gc-cons-percentage 1.0)
 
 ;;; Native compilation.
+
+;;;;;; vvv fix problem with libgccjit native compilation after MacOS 27 upgrade.
+
+;; See https://github.com/caldwell/build-emacs/issues/158
+;; Put this somewhere early in .emacs.d/init.el
+
+(if (and (fboundp 'native-comp-available-p)
+         (native-comp-available-p))
+    (progn
+      (require 'comp)
+      (setq native-comp-driver-options
+            (cons "-mmacosx-version-min=11" native-comp-driver-options))
+      (display-warning
+       'local-init
+       "*** native-comp-driver-options changed for MacOS 27 issues ***")))
+
+;;;;;; ^^^ fix problem with libgccjit native compilation after MacOS 27 upgrade.
 
 ;; Configure native compilation and move the `eln-cache' under
 ;; `var/eln-cache/' if native compilation is available.
@@ -68,7 +89,7 @@
 ;; Force a garbage collection if I leave Emacs temporarily.
 ;; I don't know how much it helps on modern hardware.
 
-(defun troi/gc-after-focus-change ()
+(defun my/gc-after-focus-change ()
   "Run GC when frame loses focus."
   (run-with-idle-timer
    5 nil
@@ -77,7 +98,9 @@
 ;; Disable handlers for `special' file name during startup.
 ;; They are stored once initialization is finished.
 
-(defvar troi/file-name-handler-alist file-name-handler-alist)
+(defvar my/file-name-handler-alist
+  file-name-handler-alist
+  "Save special file handlers.")
 (setq file-name-handler-alist nil)
 
 ;; Version Control can be queried during initialization. To
@@ -91,7 +114,9 @@
 ;; here but that won't work if you load packages from VCS
 ;; via `use-package'.
 
-(defvar troi/vc-handled-backends vc-handled-backends)
+(defvar my/vc-handled-backends
+  vc-handled-backends
+  "Save built in VC backends.")
 (setopt vc-handled-backends '(Git))
 
 ;;; Dealing with the touchpad.
@@ -99,13 +124,13 @@
 ;; Purcell's `disable-mouse' does the trick quite nicely. The mouse
 ;; pointer can still be visible, and when moved it triggers some
 ;; hover effects (clickable links show they are focused) but clicks
-;; don't register in the Emacs frame. Pefection!
+;; don't register in the Emacs frame. Perfection!
 
 ;; This may no longer be needed. I use a thumb trackball
 ;; with my Mac most of the time.
 ;;
 ;; TODO: See also package inhibit-mouse on melpa-stable.
-;; (defun troi/bad-mouse-stop-that ()
+;; (defun my/bad-mouse-stop-that ()
 ;;   "Disable the mouse/touch-pad.
 ;; This function aggressively swats mouse/touchpad in an attempt
 ;; to prevent the Mac track-pad from causing motion when I
@@ -132,9 +157,9 @@
 
 ;; Let's try Purcell's disable-mouse package.
 ;; (add-to-list
-;;  'emacs-startup-hook #'troi/bad-mouse-stop-that)
+;;  'emacs-startup-hook #'my/bad-mouse-stop-that)
 ;; (add-to-list
-;;  'after-init-hook #'troi/bad-mouse-stop-that)
+;;  'after-init-hook #'my/bad-mouse-stop-that)
 
 
 ;;; Park the mouse pointer in an inoffensive location.
@@ -154,14 +179,14 @@
 
 ;; The background and foreground color settings were copied from
 ;; another config to make the color switch from the Emacs default to
-;; the themed colors when Emacs initializes. This caused new frames to
-;; use these colors and not the themed colors. Cloning the first frame
-;; used correct colors.
+;; the themed colors when Emacs initializes. This caused frames
+;; created after the first to use these colors and not the themed
+;; colors. Cloning the first frame used correct colors.
 
 ;; I don't restart Emacs often enough that I find the visuals annoying
 ;; so I clipped the colors here. If I decide I want this I will have
 ;; to see if rebuilding the list without the foreground and background
-;; settings works. I assume from the after init hook.
+;; settings works. I assume this would be done from the after init hook.
 
 (setopt frame-inhibit-implied-resize t)
 (setopt frame-resize-pixelwise t)
@@ -188,32 +213,32 @@
 
 (scroll-bar-mode -1)
 
-;; Process performance tuning. `read-process-output-max' has
-;; an effect on communication with LSPs and other processes.
-;; My main source for this is Purcell.
+;; Process performance tuning. `read-process-output-max' has an effect
+;; on communication with LSPs and other processes. My main source for
+;; this is Purcell.
 
 (setq read-process-output-max (* 64 1024))
 (setq process-adaptive-read-buffering nil)
 
-;; Hooks to restore original values for garbage collection
-;; and special file name handlers.
+;; Hooks to restore original values for garbage collection and special
+;; file name handlers.
 
-;; If `after-focus-change-function' is bound, add my
-;; function to force a garbage collection when Emacs
-;; loses focus.
+;; If `after-focus-change-function' is bound, add my function to force
+;; a garbage collection when Emacs loses focus.
 
 (add-hook
  'emacs-startup-hook
  (lambda ()
    ;; These were hard coded as 8 Mb and 20%.
-   (setopt gc-cons-threshold troi/gc-cons-threshold)
-   (setopt gc-cons-percentage troi/gc-cons-percentage)
-   (setq   file-name-handler-alist troi/file-name-handler-alist)
+   (setopt gc-cons-threshold my/gc-cons-threshold)
+   (setopt gc-cons-percentage my/gc-cons-percentage)
+   (setq   file-name-handler-alist my/file-name-handler-alist)
    (message "gc-cons-threshold & file-name-handler-alist restored")
    (when (boundp 'after-focus-change-function)
      (add-function
       :after after-focus-change-function
-      #'troi/gc-after-focus-change))))
+      #'my/gc-after-focus-change))))
 
 (provide 'early-init)
+
 ;;; early-init.el ends here.

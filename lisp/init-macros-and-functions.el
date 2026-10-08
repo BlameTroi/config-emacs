@@ -25,7 +25,7 @@
 
 ;; Create a directory if it does not exist.
 
-(defun troi/maybe-create-directory (dir)
+(defun my/maybe-create-directory (dir)
   "If the directory DIR doesn't exist, create it.
 There is no meaningful error handling."
   (when (not (file-accessible-directory-p dir))
@@ -37,7 +37,7 @@ There is no meaningful error handling."
 ;; Add child directories of parent to the `load-path'. This is
 ;; originally from Purcell.
 
-(defun troi/add-subdirs-to-load-path (parent-dir)
+(defun my/add-subdirs-to-load-path (parent-dir)
   "Add every non-hidden subdir of PARENT-DIR to `load-path'."
   (let ((default-directory parent-dir))
     (setq load-path
@@ -63,7 +63,7 @@ There is no meaningful error handling."
 
 ;; I typically bind this to C-x 5t.
 
-(defun troi/tear-off-window ()
+(defun my/tear-off-window ()
   "Move a sub-window to a new frame.
 From a multi-window frame, tear off the current window and
 put it in a new frame."
@@ -86,7 +86,7 @@ put it in a new frame."
 
 ;; I typically bind this to C-x nf
 
-(defun troi/narrow-to-focus (start end)
+(defun my/narrow-to-focus (start end)
   "If the region is active, narrow to region, and mark it.
 If the mark is not active, narrow to the region that was
 the most recent focus. START and END define the active
@@ -104,12 +104,12 @@ region."
                (narrow-to-region (overlay-start focus)
                                  (overlay-end focus)))))))
 
-;; (define-key global-map "\C-xnf" 'troi/narrow-to-focus)
+;; (define-key global-map "\C-xnf" 'my/narrow-to-focus)
 
 ;; Clear minibuffer message area.
 
 ;;;###autoload
-(defun troi/clear-minibuffer-message (&rest _)
+(defun my/clear-minibuffer-message (&rest _)
   "Print an empty message to clear the echo area.
 Use this as advice :after a noisy function.
 
