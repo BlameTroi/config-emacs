@@ -197,7 +197,6 @@
   (blink-matching-delay 0.25)
   (blink-cursor-mode t)
   (delete-selection-mode +1)
-  (indent-tabs-mode +1)
   (tab-always-indent 'complete)
   (comment-empty-lines t)
   (require-final-newline t)

@@ -28,3 +28,4 @@ site-lisp/**/
 /transient
 /eln-cache/
 /projects
+.DS*

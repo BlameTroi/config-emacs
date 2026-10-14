@@ -173,7 +173,7 @@
 
 ;;;;;; `use-package' is NOT available. ---------------------------------
 
-(setopt debug-on-error t)
+;; (setopt debug-on-error t)
 (require 'cl-lib)
 
 ;;;;; Check for and create required directories.
@@ -283,7 +283,7 @@ are skipped or altered.")
 
 ;; Textual healing.
 
-(require 'init-editorconfig)  ;; I am so not a fan.
+;; (require 'init-editorconfig)  ;; I am so not a fan.
 
 
 ;;;;; Discoverability aids.
@@ -327,7 +327,7 @@ are skipped or altered.")
 
 (require 'init-eglot)      ;; lsp
 (require 'init-treesit)    ;; better faster language modes
-
+(require 'init-snippets)   ;; yasnippet
 
 ;;;;; Shell, compile, format:
 
@@ -338,10 +338,12 @@ are skipped or altered.")
 
 ;;;;; Language specific configuration.
 
+(require 'init-c)       ;; it cannae be stopped
 (require 'init-cmake)   ;; and friends like ninja.
 (require 'init-cobol)   ;; gnu
 (require 'init-fortran) ;; 77, IV, F90, F95, Modern
 (require 'init-git)     ;; as distinct from the magit application
+(require 'init-go)      ;; like c, it is inevitable
 (require 'init-lisps)   ;; elisp and code common to schemes
 
 (if my/site-lisp-missing-or-empty

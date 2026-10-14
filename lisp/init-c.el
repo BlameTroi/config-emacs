@@ -13,27 +13,11 @@
 
 ;;; Code:
 
-;; (with-eval-after-load 'c-ts-mode
-;;   (add-hook 'c-ts-mode-hook (apply-partially #'troi/indenture +1 8))
-;;   (setopt c-ts-mode-indent-offset 8)
-;;   (setopt c-ts-mode-indent-style 'linux)
-;;   (keymap-unset c-ts-base-mode-map "C-c C-c")) ; redundant 'comment-region'
-;;
-;; (with-eval-after-load 'c++-ts-mode
-;;   (add-hook 'c++-ts-mode-hook (apply-partially #'troi/indenture +1 8))
-;;   (setopt c-ts-mode-indent-offset 8)
-;;   (setopt c-ts-mode-indent-style 'linux)
-;;   (keymap-unset c-ts-base-mode-map "C-c C-c")) ; redundant 'comment-region'
+(with-eval-after-load 'c-ts-mode
+  (setopt c-ts-mode-indent-offset 8)
+  (setopt c-ts-mode-indent-style 'k&r)
+  (keymap-unset c-ts-base-mode-map "C-c C-c")) ; redundant 'comment-region'
 
-;; these are old and may be obsolete ...
-
-;; (setopt c-basic-offset 8)
-;; (setopt c-default-style "linux")
-;; (setopt c-ignore-auto-fill nil)
-;; (setopt c-mark-wrong-style-of-comment t)
-;; (setopt c-require-final-newline nil)
-;; (c-set-style "linux")
-;; (setopt c-ts-mode-indent-style 'linux)
 
 ;; Configure the 'clangd' language server to my preferences. 'clangd'
 ;; uses 'CMakeLists.txt' and 'compile_commands.json' to determine what
@@ -41,7 +25,7 @@
 
 (with-eval-after-load 'eglot
   (add-to-list 'eglot-server-programs
-               '((c-mode) ;;  c++-mode c-ts-mode c++-ts-mode)
+               '((c-mode c-ts-mode) ;;  c++-mode c-ts-mode c++-ts-mode)
                  . ("clangd"
                     "-j=4"
                     "--log=info"
@@ -50,7 +34,8 @@
                     "--completion-style=detailed"
                     "--pch-storage=memory"
                     "--header-insertion=never"
-                    "--header-insertion-decorators=0"))))
+                    "--header-insertion-decorators=0")))
+  (add-hook 'c-ts-mode-hook 'eglot-unsure))
 
 (provide 'init-c)
 

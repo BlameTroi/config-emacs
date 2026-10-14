@@ -23,12 +23,6 @@
 ;; ELPA at some point.
 
 
-;; If acme theme isn't in site-lisp, uncomment this to get fonts
-;; to a readable size and comment out the lines following from
-;; the require through to the custom-theme-set-faces.
-
-
-;; begin block to comment
 (require 'acme-theme)
 (mapc #'disable-theme custom-enabled-themes)
 (load-theme 'acme t)
@@ -60,42 +54,19 @@
    ((t
      (:foreground "#007700" ; or #005500?
                   :slant italic)))))
-;; end block to comment
 
-;; (use-package acme-theme
-;;   :ensure t
-;;   :config
-;;   (load-theme 'acme t)
-;;   :custom-face
-;;   (default
-;;    ((t
-;;      (:font "CaskaydiaMono Nerd Font"
-;;       :height 155
-;;       :width 'expanded))))
-;;   (fixed-pitch
-;;    ((t
-;;      (:font "CaskaydiaMono Nerd Font"
-;;       :height 155))))
-;;   (compilation-error
-;;    ((t
-;;      (:background "gray80"
-;;      :foreground "Red"))))
-;;   (corfu-default
-;;    ((t
-;;      (:foreground "#0f0f01"))))
-;;   (flymake-error
-;;    ((t
-;;      (:underline
-;;       (:color "Red"
-;;        :style wave)))))
-;;   (font-lock-comment-face
-;;    ((t
-;;      (:foreground "#707070" ; or #005500?
-;;       :slant 'italic)))))
+;; I'm trying to pull the face tweaks for hl-line out of
+;; init-display-helpers.el. There I created a hook for
+;; global-hl-line-mode to do this.
 
-;; (with-eval-after-load hl-line-mode
-;; (set-face-attribute 'hl-line nil :inherit 'highlight :extend t :underline nil :background "LightGoldenrod2" :foreground "black")
-;; )
+(with-eval-after-load 'hl-line
+  (set-face-attribute
+   'hl-line nil
+   :inherit 'highlight
+   :extend t
+   :underline nil
+   :background "LightGoldenrod2"
+   :foreground "black"))
 
 ;;;;; Additional or customized Faces:
 

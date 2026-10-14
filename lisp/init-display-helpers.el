@@ -33,16 +33,17 @@
 (use-package hl-line
   :hook
   (emacs-startup-hook . global-hl-line-mode)
-  :init
-  (add-hook 'global-hl-line-mode-hook
-            (lambda()
-              (set-face-attribute
-               'hl-line nil
-               :inherit 'highlight
-               :extend t
-               :underline nil
-               :background "LightGoldenrod2"
-               :foreground "black"))))
+  ;; :init
+  ;; (add-hook 'global-hl-line-mode-hook
+  ;;           (lambda()
+  ;;             (set-face-attribute
+  ;;              'hl-line nil
+  ;;              :inherit 'highlight
+  ;;              :extend t
+  ;;              :underline nil
+  ;;              :background "LightGoldenrod2"
+  ;;              :foreground "black"))))
+  )
 
 ;; Hilight in occur. I probably need to add a few others modes.
 
@@ -73,7 +74,7 @@
 
 ;; ;; Experimental highlight word or symbol at point. This may be too
 ;; ;; noisy.
-;; 
+;;
 ;; ;; Highlights the word/symbol at point and any other occurrences in
 ;; ;; view. Also allows to jump to the next or previous occurrence.
 ;; ;; https://github.com/nschum/highlight-symbol.el
@@ -82,9 +83,9 @@
 ;;   :config
 ;;   (setq highlight-symbol-on-navigation-p t)
 ;;   (add-hook 'prog-mode-hook 'highlight-symbol-mode))
-;; 
+;;
 ;; ;; Also experimental and maybe too noisy.
-;; 
+;;
 ;; ;; Emacs minor mode that highlights numeric literals in source code.
 ;; ;; https://github.com/Fanael/highlight-numbers
 ;; (use-package highlight-numbers
