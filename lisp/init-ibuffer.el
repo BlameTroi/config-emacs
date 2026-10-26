@@ -11,7 +11,7 @@
 (use-package ibuffer
   :ensure t
   :config
-;;  (setq ibuffer-expert t)
+  ;;  (setq ibuffer-expert t)
   (setq ibuffer-display-summary nil)
   (setq ibuffer-use-other-window nil)
   (setq ibuffer-show-empty-filter-groups nil)
@@ -50,6 +50,8 @@
                     (mode . cobol-mode)
                     (mode . fortran-mode)
                     (mode . f90-mode)
+                    (mode . go-ts-mode)
+                    (mode . go-mode)
                     (mode . c-or-c++-ts-mode)))
            ("Build" (or
                      (mode . make-mode)
@@ -57,6 +59,9 @@
                      (mode . cmake-mode)
                      (mode . makefile-gmake-mode)
                      (name . "^Makefile$")
+                     (mode . go-mod-ts-mode)
+                     (name . "^go.mod$")
+                     (name . "^go.sum$")
                      (mode . change-log-mode)))
            ("Scripts" (or
                        (mode . shell-script-mode)
@@ -74,6 +79,7 @@
                       (name . "^\\.gitignore$")
                       (name . "^Doxyfile$")
                       (name . "^config\\.toml$")
+                      (mode . json-mode)
                       (mode . yaml-mode)))
            ("Web" (or
                    (mode . mhtml-mode)
@@ -90,6 +96,9 @@
                       (mode . markdown-mode)
                       (mode . adoc-mode)))
            ("Org" (mode . org-mode))
+	   ("Markdown" (or
+			(mode . gfm-mode)
+			(mode . markdown-mode)))
            ("Magit" (or
                      (mode . magit-blame-mode)
                      (mode . magit-cherry-mode)
@@ -117,4 +126,4 @@
 
 (provide 'init-ibuffer)
 
-;;; init-buffer.el ends here.
+;;; init-ibuffer.el ends here.

@@ -8,9 +8,17 @@
 
 ;;; Code:
 
+;; This are a modus themes and they load and work, so I'm saving this for
+;; future reference when I try to get modus working again.
+
+;; (use-package foxglove-themes
+;;   :vc (:url "https://gitlab.com/vegasharmon/foxglove-themes" :rev :newest)
+;;   :config
+;;   (load-theme 'foxglove :no-confirm))
+
 ;; The manoj-dark theme could use a few tweaks but it's
 ;; a good built in default.
-(setopt custom-enabled-themes '(manoj-dark))
+;; (setopt custom-enabled-themes '(manoj-dark))
 (custom-theme-set-faces
  'user
  '(default

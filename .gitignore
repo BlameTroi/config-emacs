@@ -19,6 +19,9 @@ site-lisp/**/
 /.achievements
 /.bookmarks.el
 /history
+/eshell/
+/eww-bookmarks
+/tutorial/
 /thumbs/
 /emms/
 /image-dired/

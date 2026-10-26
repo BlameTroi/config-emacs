@@ -79,7 +79,8 @@
   ;; (repeat-mode t)
   (delete-selection-mode t)
   ;; (editorconfig-mode t) ; nope, I don't
-  (indent-tabs-mode nil)
+  (indent-tabs-mode t) ; real tabs, default 8 spaces in tab-width
+  (header-line-indent--watch-line-number-width)
   (imenu-auto-rescan t)
   (view-read-only t)
   (column-number-mode t)

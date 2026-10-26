@@ -14,7 +14,9 @@
 (use-package project
   :custom
   (project-vc-extra-root-markers
-   '(".projectile" ".project.el" "fpm.toml")))
+   '(".projectile" ;; The other project manager
+     "fpm.toml"    ;; The Fortran Project Manager
+     ".project"))) ;; The marker I use
 
 ;; (setopt project-switch-commands
 ;;         '((project-find-file "Find file")

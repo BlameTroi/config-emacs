@@ -7,12 +7,14 @@
 ;; would rather not experiment with the `ts' version so I am using
 ;; jblevins' `markdown-mode' from melpa-stable.
 
+;; I'm defaulting any `*.md' file to GitHub Flavored Markdown.
+
 ;;; Code:
 
 (use-package markdown-mode
   :ensure t
   :defer t
-  :mode ("README\\.md\\'" . gfm-mode)
+  :mode ("\\.md\\'" . gfm-mode)
   :init (setq markdown-command "cmark-gfm")
   :bind (:map markdown-mode-map
          ("C-c C-e" . markdown-do)))

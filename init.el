@@ -129,8 +129,6 @@
 ;; indirection through `flymake'. Yes, Purcell has some sort helper
 ;; package, but for now I'll leave things with `flymake'.
 
-;; Get `cmark-gfm' configuration for `markdown-mode' finalized.
-
 ;; Settle on a Markdown previewer.
 
 ;; Review `minad/tempel' as a snippet and template provider.
@@ -151,6 +149,8 @@
 ;; As noted above, MacOS 27 work-around and figure out how to
 ;; deal with non-Elpa packages.
 
+;; Emacs Lisp formatting is adding tabs when it shouldn't. I am not sure
+;; why.
 
 ;; CHANGE LOG:
 
@@ -166,6 +166,8 @@
 ;;             and move the MacOS 27 work around from init.el to
 ;;             early-init.el.
 
+;; 2026/10/25  Ibuffer setup tweaks, default to GFM for Markdown.
+
 ;;; Code:
 
 
@@ -180,7 +182,7 @@
 
 (defvar my/lisp-directory
   (expand-file-name "lisp" user-emacs-directory)
-  "The lisp subdirectory must exist and hold configuration files.")
+  "The Lisp subdirectory must exist and hold configuration files.")
 
 (defvar my/site-lisp-directory
   (expand-file-name "site-lisp" user-emacs-directory)
@@ -195,7 +197,7 @@ are skipped or altered.")
   "Theme can be loaded from elpa.")
 
 (when (not (file-directory-p my/lisp-directory))
-  (error "No subdirectory lisp found under user emacs directory!"))
+  (error "No subdirectory `lisp' found under user `emacs' directory!"))
 
 (when (not (file-directory-p my/site-lisp-directory))
   (display-warning

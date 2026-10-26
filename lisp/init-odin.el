@@ -10,9 +10,19 @@
 
 ;;; Code:
 
+(defun my/odin-configuration ()
+  "Tweak and then start eglot."
+  (eglot-ensure)
+  (setq indent-tabs-mode t)
+  ;; For reasons I have not determined, the odin-ts-mode-indent-offset
+  ;; value is not being used. tab-width is used instead.
+  (setq tab-width odin-ts-mode-indent-offset))
+
 (require 'odin-ts-mode)
 
 (add-to-list 'auto-mode-alist '("\\.odin\\'" . odin-ts-mode))
+
+(add-hook 'odin-ts-mode-hook 'my/odin-configuration)
 
 (with-eval-after-load 'eglot
   (add-to-list
